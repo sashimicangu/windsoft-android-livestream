@@ -1,6 +1,7 @@
 package com.windsoftandroidlivestream;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.pedro.encoder.input.video.CameraHelper;
 import com.pedro.rtplibrary.rtmp.RtmpCamera1;
 import com.pedro.rtplibrary.util.FpsListener;
 
@@ -30,9 +32,11 @@ public class CameraView extends LinearLayout implements SurfaceHolder.Callback, 
     private RtmpCamera1 rtmpCamera;
     private Button goLiveButton;
     private Button changeCameraButton;
+    private Button btnOnGoLive;
     private TextView bitrateLabel;
     private TextView fpsLabel;
     private  Context mcontext;
+    private Boolean liveDesired = false;
 
     public CameraView(Context context) {
         super(context);
@@ -103,7 +107,7 @@ public class CameraView extends LinearLayout implements SurfaceHolder.Callback, 
         rtmpCamera = new RtmpCamera1(surfaceView ,this );
         rtmpCamera.setReTries(1000); // Effectively retry forever
 
-        
+
         changeCameraButton = rootView.findViewById(R.id.changeCameraButton);
         changeCameraButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -111,6 +115,16 @@ public class CameraView extends LinearLayout implements SurfaceHolder.Callback, 
                 changeCameraClicked(view);
             }
         });
+
+        btnOnGoLive = rootView.findViewById(R.id.btnOnGoLive);
+        btnOnGoLive.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+//                goLiveClicked(view);
+            }
+        });
+
 
 
     }
@@ -153,4 +167,62 @@ public class CameraView extends LinearLayout implements SurfaceHolder.Callback, 
         Log.i(TAG, "Change Camera Button tapped");
         rtmpCamera.switchCamera();
     }
+//    public void goLiveClicked(View view) {
+//        Log.i(TAG, "Go Live Button tapped");
+//
+//        if (liveDesired) {
+//            // Calling the "stopStream" function can take a while, so this happens on a new thread.
+//            goLiveButton.setText("Stopping...");
+//            new Thread(new Runnable() {
+//                public void run() {
+//                    rtmpCamera.stopStream();
+//                    BroadcastActivity.this.runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            goLiveButton.setText("Go Live!");
+//                        }
+//                    });
+//                }
+//            }).start();
+//            liveDesired = false;
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED); // Unlock orientation
+//        } else {
+//
+//            // Lock orientation to the current orientation while stream is active
+//            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+//            switch (rotation) {
+//                case Surface.ROTATION_90:
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//                    break;
+//                case Surface.ROTATION_180:
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+//                    break;
+//                case Surface.ROTATION_270:
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+//                    break;
+//                default:
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                    break;
+//            }
+//
+//            // Configure the stream using the configured preset
+//            rtmpCamera.prepareVideo(
+//                    preset.width,
+//                    preset.height,
+//                    preset.frameRate,
+//                    preset.bitrate,
+//                    2, // Fixed 2s keyframe interval
+//                    CameraHelper.getCameraOrientation(this)
+//            );
+//            rtmpCamera.prepareAudio(
+//                    128 * 1024, // 128kbps
+//                    48000, // 48k
+//                    true // Stereo
+//            );
+//
+//            // Start the stream!
+//            rtmpCamera.startStream(rtmpEndpoint + streamKey);
+//            liveDesired = true;
+//            goLiveButton.setText("Connecting... (Cancel)");
+//        }
+//    }
 }
