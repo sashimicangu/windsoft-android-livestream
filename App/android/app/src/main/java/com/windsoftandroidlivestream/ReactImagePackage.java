@@ -23,7 +23,7 @@ public class ReactImagePackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(
-                new ReactImageManager(reactContext)
+                new ReactImageManager()
         );
     }
 }

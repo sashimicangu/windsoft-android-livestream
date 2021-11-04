@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
+  View,
 } from 'react-native'
 import MyImageView from './src/utils/component/ImageView'
 
@@ -13,11 +14,12 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text children={'hello'} />
+      
       <MyImageView
+        text={'Quá đã'}
         src={'Hello cac ban'}
         resizeMode="cover"
-        style={{ height: 50, backgroundColor: 'yellow' }}
+        style={{ flex: 1 }}
       />
     </SafeAreaView>
   )
