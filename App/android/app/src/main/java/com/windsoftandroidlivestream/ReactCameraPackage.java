@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ReactImagePackage implements ReactPackage {
+public class ReactCameraPackage implements ReactPackage {
 
     @NonNull
     @Override
@@ -23,7 +23,7 @@ public class ReactImagePackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(
-                new ReactImageManager()
+                new ReactCameraManager()
         );
     }
 }
